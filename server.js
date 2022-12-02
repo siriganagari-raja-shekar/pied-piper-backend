@@ -1,6 +1,11 @@
-require("dotenv").config();
 const http = require("http");
+const logger = require("./utils/logger");
+const app = require("./app");
+const config = require("./utils/config");
 
-console.log(process.env.PORT);
+const server = http.createServer(app);
 
-// const server = http.createServer()
+server.listen(config.PORT, ()=>{
+    logger.info(`Server started on port ${config.PORT}`);
+});
+
