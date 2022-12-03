@@ -1,4 +1,7 @@
 const { Appointment } = require("./../models/appointment");
+const logger = require("./../utils/logger");
+const mongoose = require("mongoose");
+
 
 const createAppointment = async (appointmentObject) =>{
 
@@ -20,8 +23,19 @@ const deleteAppointment = async (id)=>{
 }
 
 const getAppointmentsByQuery = async (query) => {
-    return await Appointment.find(query);
+
+    if(query.patient){
+        query.patient = mongoose.Types.ObjectId(query.patient);
+    }
+    if(query.doctor){
+        query.doctor = mongoose.Types.ObjectId(query.doctor);
+    }
+
+    const appointments =  await Appointment.find(query);
+
+    return appointments;
 }
+
 
 module.exports = {
     createAppointment: createAppointment,

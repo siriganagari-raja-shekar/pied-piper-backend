@@ -15,7 +15,7 @@ const userSchema = mongoose.Schema({
     },
     role: {
         type: String,
-        requried: true
+        required: true
     },
 });
 
@@ -57,6 +57,10 @@ const Patient = User.discriminator("Patient", new mongoose.Schema({
         type: String,
         required: true
     },
+    subscriptionType: {
+        type: String,
+        required: true
+    },
     dateOfBirth: {
         type: Date,
         required: true
@@ -64,6 +68,18 @@ const Patient = User.discriminator("Patient", new mongoose.Schema({
     address: {
         type: addressSchema,
         required: true,
+    },
+    appointmentsLeft: {
+        type: Number,
+        required: true
+    },
+    videoConsultationsLeft: {
+        type: Number,
+        required: true
+    },
+    labTestsLeft: {
+        type: Number,
+        required: true
     }
 }));
 

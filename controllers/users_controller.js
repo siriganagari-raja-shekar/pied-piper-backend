@@ -44,6 +44,20 @@ const createUser = async (request, response ) =>{
         }
     }
 
+    const subscriptionToAppointmentCount= {
+        "individual": {
+            "bronze": 7,
+            "silver": 10,
+            "gold": 15,
+            "platinum": 20
+        },
+        "family": {
+            "basic": 35,
+            "premium": 50
+        }
+        
+    }
+
     const userPasswordHash = await bcrypt.hash(request.body.password, 10);
     const userObject = {};
 
@@ -54,15 +68,20 @@ const createUser = async (request, response ) =>{
 
     if(userObject.role === 'patient'){
         userObject.subscription = request.body.subscription.trim().toLowerCase();
+        userObject.subscriptionType = request.body.subscriptionType.trim().toLowerCase();
         userObject.dateOfBirth = new Date(JSON.parse(request.body.dateOfBirth.trim()));
         userObject.address = request.body.address;
+        userObject.videoConsultationsLeft = subscriptionToAppointmentCount[userObject.subscriptionType][userObject.subscription];
+        userObject.appointmentsLeft = Math.floor(userObject.videoConsultationsLeft / 2);
+        userObject.labTestsLeft = Math.floor(userObject.videoConsultationsLeft/1.5);
+
     }
     else if(userObject.role === 'doctor'){
         userObject.hospitalName = request.body.hospitalName;
         userObject.specialization = request.body.specialization; 
         userObject.hospitalAddress = request.body.hospitalAddress;
     }
-    console.log(userObject);
+
     const createdUser = await usersServices.createUser(userObject);
     if(!createdUser){
         return response.status(500).json({
@@ -128,6 +147,12 @@ const updateUser = async (request, response) =>{
             user.dateOfBirth = new Date(JSON.parse(request.body.dateOfBirth));
         if(request.body.address)
             user.address = request.body.address;
+        if(request.body.appointmentsLeft)
+            user.appointmentsLeft = new Number(request.body.appointmentsLeft);
+        if(request.body.videoConsultationsLeft)
+            user.videoConsultationsLeft = new Number(request.body.videoConsultationsLeft);
+        if(request.body.labTestsLeft)
+            user.labTestsLeft = new Number(request.body.labTestsLeft);
     }
 
     if(user.role === "doctor"){
