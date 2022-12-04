@@ -8,7 +8,14 @@ const login = async (request, response) =>{
     const {email, password}  = request.body;
     
     const users = await usersServices.fetchByQuery({email: email}) ;
+
+    if(users.length === 0){
+        return response.status(400).json({
+            error: "User with specified email is not found. Please check"
+        })
+    }
     const user = users[0];
+
     const passwordMatch = user.length === 0 ? false : await bcrypt.compare(password, user.passwordHash);
 
     if(!(user.length !==0  && passwordMatch)){

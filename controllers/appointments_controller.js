@@ -49,6 +49,7 @@ const createAppointment = async (request, response)  => {
     const appointmentObj = {
         patient: user._id,
         doctor: doctor._id,
+        appointmentType: body.appointmentType,
         time: new Date(JSON.parse(body.time)),
         comments: [],
         vitals: {

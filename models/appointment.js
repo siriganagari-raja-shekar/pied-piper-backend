@@ -94,6 +94,10 @@ const appointmentSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
+    appointmentType: {
+        type: String,
+        required: true
+    },
     vitals: {
         bloodPressure: {
             type: String,

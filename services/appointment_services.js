@@ -6,11 +6,11 @@ const mongoose = require("mongoose");
 const createAppointment = async (appointmentObject) =>{
 
     const appointment = new Appointment(appointmentObject);
-    return await appointment.save();
+    return await appointment.save().populate("doctor").populate("patient");
 }
 
 const getSingleAppointment = async (id)=>{
-    const appointment = await Appointment.findById(id);
+    const appointment = await Appointment.findById(id).populate("doctor").populate("patient");
     return appointment;
 }
 
@@ -31,7 +31,7 @@ const getAppointmentsByQuery = async (query) => {
         query.doctor = mongoose.Types.ObjectId(query.doctor);
     }
 
-    const appointments =  await Appointment.find(query);
+    const appointments =  await Appointment.find(query).populate("doctor").populate("patient");
 
     return appointments;
 }
