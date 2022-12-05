@@ -36,10 +36,16 @@ const removeUser = async (id) =>{
     return deletedUser;
 }
 
+const updateUser = async (user) =>{
+    const updatedUser = await user.save();
+    return updatedUser;
+}
+
 module.exports = {
     fetchAllUsers: fetchAllUsers,
     fetchUserById: fetchUserById,
     fetchByQuery: fetchByQuery,
     createUser: createUser,
-    removeUser: removeUser
+    removeUser: removeUser,
+    updateUser: updateUser
 };

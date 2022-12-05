@@ -27,22 +27,30 @@ const getOneUser = async (request, response) => {
 const createUser = async (request, response ) =>{
     const errors = validationResult(request);
 
+    const users = await usersServices.fetchByQuery({email: request.body.email});
+    if(users.length !==0){
+        return response.status(400).json({
+            error: "User with this email ID already exists. Please login if you already have an account"
+        })
+    }
+
     if(!errors.isEmpty()){
 
         if( errors.errors[0].param === 'email'){
 
             return response.status(400).json({
-                errors: errors.array()
+                error: "Please enter correct email"
             }); 
         }
 
         if( errors.errors[0].param === 'password'){
 
             return response.status(400).json({
-                errors: errors.array()
+                error: "Please enter a strong password"
             }); 
         }
     }
+    
 
     const subscriptionToAppointmentCount= {
         "individual": {
@@ -64,6 +72,8 @@ const createUser = async (request, response ) =>{
     userObject.email = request.body.email;
     userObject.passwordHash = userPasswordHash;
     userObject.name = request.body.name;
+    userObject.phoneNumber = request.body.phoneNumber;
+    userObject.dateOfBirth = new Date(request.body.dateOfBirth);
     userObject.role = request.body.role.trim().toLowerCase();
 
     if(userObject.role === 'patient'){

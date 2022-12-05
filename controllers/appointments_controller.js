@@ -39,13 +39,24 @@ const createAppointment = async (request, response)  => {
         })
     }
     const body = request.body;
-    if(!body.doctor || !body.time){
+    if(!body.doctor || !body.time || !body.appointmentType){
         return response.status(400).json({
-            error: "Please provide doctor id and time to book an appointment"
+            error: "Please provide doctor id, time and appointment type to book an appointment"
         })
     }
 
     const doctor = await usersServices.fetchUserById(body.doctor);
+    const patient = await usersServices.fetchUserById(user.id);
+
+    if(body.appointmentType === "video"){
+        patient.videoConsultationsLeft = patient.videoConsultationsLeft - 1;
+    }
+    else{
+        patient.appointmentsLeft = patient.appointmentsLeft - 1;
+    }
+
+    await usersServices.updateUser(patient);
+
     const appointmentObj = {
         patient: user._id,
         doctor: doctor._id,
@@ -221,6 +232,11 @@ const addLabResult = async(request, response)=>{
     appointment.labs.push(lab);
 
     const updatedAppointment = await appointmentServices.updateAppointment(appointment);
+    const patient = await usersServices.fetchUserById(appointment.patient.id);
+
+    patient.labTestLeft = patient.labTestLeft - 1;
+
+    await usersServices.updateUser(patient);
 
     if(!updatedAppointment){
         return response.status(500).json({
