@@ -6,6 +6,8 @@ const usersRouter = express.Router();
 
 
 usersRouter.get("/", usersController.getAllUsers);
+usersRouter.get("/cities", usersController.getCities);
+usersRouter.get("/doctors", usersController.getDoctorsByCity);
 usersRouter.get("/:id", usersController.getOneUser);
 usersRouter.post("/", validators.emailValidator, validators.passwordValidator, usersController.createUser);
 usersRouter.delete("/:id", middleware.userExtractor,usersController.deleteUser);

@@ -2,6 +2,7 @@ const { User, Doctor, Patient} = require("./../models/user");
 
 
 const fetchAllUsers = async ()=>{
+    console.log("Fetching users in services");
     const users = await User.find({});
     return users;
 };

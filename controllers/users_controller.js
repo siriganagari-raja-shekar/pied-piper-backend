@@ -75,6 +75,7 @@ const createUser = async (request, response ) =>{
     userObject.phoneNumber = request.body.phoneNumber;
     userObject.dateOfBirth = new Date(request.body.dateOfBirth);
     userObject.role = request.body.role.trim().toLowerCase();
+    userObject.sex = request.body.sex.trim();
 
     if(userObject.role === 'patient'){
         userObject.subscription = request.body.subscription.trim().toLowerCase();
@@ -84,6 +85,8 @@ const createUser = async (request, response ) =>{
         userObject.videoConsultationsLeft = subscriptionToAppointmentCount[userObject.subscriptionType][userObject.subscription];
         userObject.appointmentsLeft = Math.floor(userObject.videoConsultationsLeft / 2);
         userObject.labTestsLeft = Math.floor(userObject.videoConsultationsLeft/1.5);
+        userObject.height = request.body.height;
+        userObject.weight = request.body.weight;
 
     }
     else if(userObject.role === 'doctor'){
@@ -149,6 +152,9 @@ const updateUser = async (request, response) =>{
     }
     user.name = request.body.name ?? user.name;
 
+    if(request.body.sex){
+        user.sex = request.body.sex;
+    }
 
     if(user.role === "patient"){
         if(request.body.subscription)
@@ -163,6 +169,10 @@ const updateUser = async (request, response) =>{
             user.videoConsultationsLeft = new Number(request.body.videoConsultationsLeft);
         if(request.body.labTestsLeft)
             user.labTestsLeft = new Number(request.body.labTestsLeft);
+        if(request.body.height)
+            user.height = new Number(request.body.height);
+        if(request.body.weight)
+            user.weight = new Number(request.body.weight);
     }
 
     if(user.role === "doctor"){
@@ -186,11 +196,40 @@ const updateUser = async (request, response) =>{
     }
 }
 
+const getCities = async (request, response)=>{
+
+    const users = await usersServices.fetchAllUsers();
+
+    const cities = new Set();
+
+    users.forEach(user => {
+        if(user.address)
+            cities.add(user.address.city);
+        if(user.hospitalAddress)
+                cities.add(user.hospitalAddress.city);
+    });
+    
+    return response.status(200).json(Array.from(cities));
+}
+
+const getDoctorsByCity = async (request, response) => {
+    const doctors = await usersServices.fetchByQuery({role: "doctor"});
+
+    if(!request.query.city){
+        return response.status(200).json(doctors);
+    }
+
+    const doctorsFromCity = doctors.filter(doctor => doctor.hospitalAddress.city === request.query.city);
+
+    return response.status(200).json(doctorsFromCity);
+}
 
 module.exports = {
     getAllUsers: getAllUsers,
     getOneUser: getOneUser,
     createUser: createUser,
     deleteUser: deleteUser,
-    updateUser: updateUser
+    updateUser: updateUser,
+    getCities: getCities,
+    getDoctorsByCity: getDoctorsByCity
 };

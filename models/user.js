@@ -25,6 +25,10 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    sex: {
+        type: String,
+        required: true
+    }
 });
 
 userSchema.set("toJSON", {
@@ -34,6 +38,7 @@ userSchema.set("toJSON", {
         delete ret.__v;
         if(ret.__t)
             delete ret.__t;
+        delete ret.passwordHash
     }
 });
 
@@ -61,6 +66,14 @@ addressSchema.set("toJSON", {
 });
 
 const Patient = User.discriminator("Patient", new mongoose.Schema({
+    height: {
+        type: Number,
+        required: true
+    },
+    weight: {
+        type: Number,
+        required: true
+    },
     subscription: {
         type: String,
         required: true
