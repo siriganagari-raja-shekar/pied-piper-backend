@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.40c5cf1e.css",
-    "main.js": "/static/js/main.bd1bd401.js",
+    "main.css": "/static/css/main.ddf87567.css",
+    "main.js": "/static/js/main.4359e3bf.js",
     "static/media/carousel-image-3.jpg": "/static/media/carousel-image-3.7f87265b4ec5bd3be70b.jpg",
     "static/media/carousel-image-1.jpg": "/static/media/carousel-image-1.f6b4c3048a056e37713b.jpg",
     "static/media/privacy.jpg": "/static/media/privacy.791389060168305c73ac.jpg",
@@ -17,11 +17,11 @@
     "static/media/icons8-instagram-500.png": "/static/media/icons8-instagram-500.81c1dc5cb3f0f80c84ca.png",
     "static/media/circle-check-regular.svg": "/static/media/circle-check-regular.7f2926b994c456d71f5024861524d74a.svg",
     "index.html": "/index.html",
-    "main.40c5cf1e.css.map": "/static/css/main.40c5cf1e.css.map",
-    "main.bd1bd401.js.map": "/static/js/main.bd1bd401.js.map"
+    "main.ddf87567.css.map": "/static/css/main.ddf87567.css.map",
+    "main.4359e3bf.js.map": "/static/js/main.4359e3bf.js.map"
   },
   "entrypoints": [
-    "static/css/main.40c5cf1e.css",
-    "static/js/main.bd1bd401.js"
+    "static/css/main.ddf87567.css",
+    "static/js/main.4359e3bf.js"
   ]
 }
