@@ -73,14 +73,13 @@ const createUser = async (request, response ) =>{
     userObject.passwordHash = userPasswordHash;
     userObject.name = request.body.name;
     userObject.phoneNumber = request.body.phoneNumber;
-    userObject.dateOfBirth = new Date(request.body.dateOfBirth);
+    userObject.dateOfBirth = new Date(JSON.parse(request.body.dateOfBirth.trim()));
     userObject.role = request.body.role.trim().toLowerCase();
     userObject.sex = request.body.sex.trim();
 
     if(userObject.role === 'patient'){
         userObject.subscription = request.body.subscription.trim().toLowerCase();
         userObject.subscriptionType = request.body.subscriptionType.trim().toLowerCase();
-        userObject.dateOfBirth = new Date(JSON.parse(request.body.dateOfBirth.trim()));
         userObject.address = request.body.address;
         userObject.videoConsultationsLeft = subscriptionToAppointmentCount[userObject.subscriptionType][userObject.subscription];
         userObject.appointmentsLeft = Math.floor(userObject.videoConsultationsLeft / 2);
