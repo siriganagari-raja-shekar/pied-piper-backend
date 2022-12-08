@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/static/css/main.e8923359.css",
+    "main.js": "/static/js/main.d0b6bc5a.js",
+    "static/media/carousel-image-3.jpg": "/static/media/carousel-image-3.7f87265b4ec5bd3be70b.jpg",
+    "static/media/carousel-image-1.jpg": "/static/media/carousel-image-1.f6b4c3048a056e37713b.jpg",
+    "static/media/privacy.jpg": "/static/media/privacy.791389060168305c73ac.jpg",
+    "static/media/videocall.jpg": "/static/media/videocall.5baa853a1fad44e2120c.jpg",
+    "static/media/carousel-image-2.jpg": "/static/media/carousel-image-2.cc913d4973998c9d7cb7.jpg",
+    "static/media/appointments.jpg": "/static/media/appointments.e67bd8c93e9980777384.jpg",
+    "static/media/doctor2.png": "/static/media/doctor2.de9296f3ccb9f530d79a.png",
+    "static/media/FAQ.png": "/static/media/FAQ.b3b9040f23a7dcf123b9.png",
+    "static/media/GreatVibes-Regular.ttf": "/static/media/GreatVibes-Regular.6d246c3b51d7eb58b13a.ttf",
+    "static/media/search-doctor.png": "/static/media/search-doctor.968d9b3544ceb3fa0de0.png",
+    "static/media/profilejpg.png": "/static/media/profilejpg.5ff58ba869e192dbb488.png",
+    "static/media/icons8-twitter-500.png": "/static/media/icons8-twitter-500.d2e26b519b820823be3d.png",
+    "static/media/icons8-instagram-500.png": "/static/media/icons8-instagram-500.81c1dc5cb3f0f80c84ca.png",
+    "static/media/circle-check-regular.svg": "/static/media/circle-check-regular.7f2926b994c456d71f5024861524d74a.svg",
+    "index.html": "/index.html",
+    "main.e8923359.css.map": "/static/css/main.e8923359.css.map",
+    "main.d0b6bc5a.js.map": "/static/js/main.d0b6bc5a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e8923359.css",
+    "static/js/main.d0b6bc5a.js"
+  ]
+}
