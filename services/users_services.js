@@ -2,7 +2,7 @@ const { User, Doctor, Patient} = require("./../models/user");
 
 
 const fetchAllUsers = async ()=>{
-    console.log("Fetching users in services");
+    
     const users = await User.find({});
     return users;
 };
@@ -25,10 +25,8 @@ const createUser = async (userObject) => {
     else if(userObject.role.trim().toLowerCase() === 'doctor')
         user = new Doctor(userObject);
     else{
-        console.log("Creating admin user");
         user = new User(userObject);
     }
-    console.log(user);  
     return await user.save();
 }
 

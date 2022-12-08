@@ -138,6 +138,9 @@ const updateUser = async (request, response) =>{
         });
     }
 
+    console.log(user);
+    console.log(request.body);
+
     if(!errors.isEmpty()){
 
         if( errors.errors[0].param === 'password'){
@@ -154,6 +157,9 @@ const updateUser = async (request, response) =>{
 
     if(request.body.sex){
         user.sex = request.body.sex;
+    }
+    if(request.body.phoneNumber){
+        user.phoneNumber = request.body.phoneNumber;
     }
 
     if(user.role === "patient"){

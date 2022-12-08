@@ -7,6 +7,7 @@ const config = require("./utils/config");
 const usersRouter = require("./routes/users_routes");
 const loginRouter = require("./routes/login_routes");
 const appointmentRouter = require("./routes/appointment_routes");
+const paymentRouter = require("./routes/payment_routes");
 
 logger.info("Connecting to", config.MONGODB_URI); 
 mongoose.connect(config.MONGODB_URI)
@@ -26,5 +27,6 @@ app.use(logger.requestLogger);
 app.use("/api/users", usersRouter);
 app.use("/api/login", loginRouter);
 app.use("/api/appointments", appointmentRouter);
+app.use("/api/payment", paymentRouter);
 
 module.exports = app;

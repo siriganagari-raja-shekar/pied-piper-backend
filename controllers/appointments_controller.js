@@ -29,6 +29,20 @@ const getAppointments = async (request, response) =>{
         })
     }
 }
+
+const getAppointment = async (request, response)=>{
+    
+    const appointment = await appointmentServices.getSingleAppointment(request.params.id);
+
+    if(appointment){
+        return response.status(200).json(appointment);
+    }
+    else{
+        return response.status(400).json({
+            error: "Could not find appointment with this ID"
+        })
+    }
+}
 const createAppointment = async (request, response)  => {
 
     const user = request.user;
@@ -143,7 +157,9 @@ const addCommentToAppointment = async (request, response)=>{
         })
     }
 
-    if(user.id !== appointment.patient.toString() && user.id !== appointment.doctor.toString()){
+
+    if(user.id !== appointment.patient.id.toString() && user.id !== appointment.doctor.id.toString()){
+
         return response.status(401).json({
             error: "Unauthorized to post a comment from another source"
         })
@@ -175,9 +191,9 @@ const updatePrescription = async(request, response)=>{
     const user = request.user;
     const body = request.body;
 
-    if(user.role !== "doctor" || user.id !== appointment.doctor.toString()){
+    if(user.role !== "doctor" || user.id !== appointment.doctor.id.toString()){
         return response.status(401).json({
-            error: "Unauthorized to post update the prescription"
+            error: "Unauthorized to update the prescription"
         }) 
     }
 
@@ -212,29 +228,30 @@ const addLabResult = async(request, response)=>{
     const user = request.user;
     const body = request.body;
 
-    if(user.role !== "doctor" || user.id !== appointment.doctor.toString()){
-        return response.status(401).json({
-            error: "Unauthorized to post update the lab results"
-        }) 
-    }
-
-    if(!body.testType || !body.time){
+    if(!appointment){
         return response.status(400).json({
-            error: "Please enter lab result in correct format"
+            error: "Appointment with given id not found"
         })
     }
 
-    const lab = {
-        testType: body.testType,
-        time: new Date(JSON.parse(body.time))
+    if(user.role !== "doctor" || user.id !== appointment.doctor.id.toString()){
+        return response.status(401).json({
+            error: "Unauthorized to update the lab results"
+        }) 
     }
 
-    appointment.labs.push(lab);
+    if(!body.labs){
+        return response.status(400).json({
+            error: "Please give lab results as input"
+        })
+    }
+
+    appointment.labs = body.labs;
 
     const updatedAppointment = await appointmentServices.updateAppointment(appointment);
     const patient = await usersServices.fetchUserById(appointment.patient.id);
 
-    patient.labTestLeft = patient.labTestLeft - 1;
+    patient.labTestsLeft = patient.labTestsLeft - 1;
 
     await usersServices.updateUser(patient);
 
@@ -265,6 +282,7 @@ module.exports = {
     createAppointment: createAppointment,
     updateVitals: updateVitals,
     deleteAppointment: deleteAppointment,
+    getAppointment: getAppointment,
     getAppointments: getAppointments,
     addCommentToAppointment: addCommentToAppointment,
     updatePrescription: updatePrescription,
